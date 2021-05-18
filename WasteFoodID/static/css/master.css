@@ -6,6 +6,11 @@
 .hero-header-2-2 {
   padding: 3rem 2rem;
 }
+
+.nav-section {
+  height:100%; width: 100%; box-sizing: border-box; background-color: #FFFFFF;
+}
+
 .header-2-2 .navbar-light .navbar-nav .nav-link {
   font-size: 18px;
   color: #1d1e3c;
@@ -321,3 +326,5 @@
       padding-right: 6rem;
       padding-bottom: 3rem;
     }
+  }
+

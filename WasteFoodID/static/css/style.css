@@ -1,0 +1,14 @@
+:root {
+    --my-grey : #E5E5E5;
+    --my-green : #27C499;
+}
+
+.btn-green {
+    background-color: var(--my-green);
+    color: white !important;
+}
+
+.btn-green:hover {
+    background-color: #1C9171 !important;
+}
+

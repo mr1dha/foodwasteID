@@ -4,8 +4,56 @@
 
 {% load crispy_forms_tags %}
 
+<style>
+  body {
+    background-color: var(--my-grey);
+  }
+
+  section.nav-section {
+    background-color: transparent;
+  }
+
+  .login-wrapper {
+    background-color: white;
+    padding: 2em 2em;
+    border-radius: 1em;
+    margin-bottom: 5em;
+    margin-top: 1em;
+  }
+
+  .btn-login {
+    width: 100%;
+    margin-left: auto !important;
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  label {
+    display: none;
+  }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-5">
+      <div class="login-wrapper">
+        <h2 class="font-weight-bold mb-4">Login</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div id="div_id_username" class="form-group"> <label for="id_username" class=" requiredField">
+            Username<span class="asteriskField">*</span> </label> <div class=""> <input placeholder="Username" type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="textinput textInput form-control" required id="id_username"> </div> </div> <div id="div_id_password" class="form-group"> <label for="id_password" class=" requiredField">
+            Password<span class="asteriskField">*</span> </label> <div class=""> <input placeholder="Password" type="password" name="password" autocomplete="current-password" class="textinput textInput form-control" required id="id_password"> </div> </div>
+
+          <button class="btn btn-green btn-login" type="submit">Login</button>
+        </form>
+        <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!--Login--> 
-<div class="container py-5">
+<!-- <div class="container">
   <h1>Login</h1>
   <form method="POST">
     {% csrf_token %}
@@ -13,6 +61,6 @@
     <button class="btn btn-primary" type="submit">Login</button>
   </form>
   <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
-</div>
+</div> -->
 
 {% endblock %}
