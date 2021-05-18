@@ -5,6 +5,10 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
+#Function akan melakukam redirect ke landingpage saat base url diakses
+def landing(request):
+    return render(request=request, template_name='main/landing.html')
+
 #Function ini hanya akan melakukan redirect ke halaman beranda user
 def homepage(request):
     return render(request=request, template_name='main/home.html')

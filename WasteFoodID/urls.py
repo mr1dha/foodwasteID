@@ -5,7 +5,8 @@ from . import views
 app_name = "main"
 
 urlpatterns = [
-    path("", views.homepage, name="homepage"),
+    path("", views.landing, name="landing"),
+    path("/home", views.homepage, name="homepage"),
     path('admin/', admin.site.urls),
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
