@@ -1,18 +1,117 @@
 {% extends "main/master.html" %}
+{% block title %}Register{% endblock %}
 
-{% block content %} 
+{% block content %}    
 
-{% load crispy_forms_tags %}         
+<style>
+  body {
+    background-color: var(--my-grey);
+  }
 
-<!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form|crispy }}                    
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+  section.nav-section {
+    background-color: transparent;
+  }
+
+  .register-wrapper {
+    background-color: white;
+    padding: 2em 2em;
+    border-radius: 1em;
+    margin-bottom: 5em;
+    margin-top: 1em;
+  }
+
+  .btn-register {
+    width: 100%;
+    margin-left: auto !important;
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  label {
+    display: none;
+  }
+</style>
+
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-5">
+      <div class="register-wrapper">
+        <h2 class="font-weight-bold mb-4">Register</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div id="div_id_username" class="form-group">
+            <label for="id_username" class="requiredField">
+              Username<span class="asteriskField">*</span>
+            </label>
+            <div class="">
+              <input
+                placeholder="Username"
+                type="text"
+                name="username"
+                maxlength="150"
+                autofocus
+                class="textinput textInput form-control"
+                required
+                id="id_username"
+              />
+            </div>
+          </div>
+          <div id="div_id_email" class="form-group">
+            <label for="id_email" class="requiredField">
+              Email<span class="asteriskField">*</span>
+            </label>
+            <div class="">
+              <input
+                placeholder="Email"
+                type="email"
+                name="email"
+                class="emailinput form-control"
+                required
+                id="id_email"
+              />
+            </div>
+          </div>
+          <div id="div_id_password1" class="form-group">
+            <label for="id_password1" class="requiredField">
+              Password<span class="asteriskField">*</span>
+            </label>
+            <div class="">
+              <input
+                placeholder="Password"
+                type="password"
+                name="password1"
+                autocomplete="new-password"
+                class="textinput textInput form-control"
+                required
+                id="id_password1"
+              />
+            </div>
+          </div>
+          <div id="div_id_password2" class="form-group">
+            <label for="id_password2" class="requiredField">
+              Password confirmation<span class="asteriskField">*</span>
+            </label>
+            <div class="">
+              <input
+                placeholder="Re-password"
+                type="password"
+                name="password2"
+                autocomplete="new-password"
+                class="textinput textInput form-control"
+                required
+                id="id_password2"
+              />
+            </div>
+          </div>
+
+          <button class="btn btn-green btn-register" type="submit">register</button>
+        </form>
+        <p class="text-center">
+         Already have an account? <a href="/login">Log in here!</a>.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

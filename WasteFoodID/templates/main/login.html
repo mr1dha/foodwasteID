@@ -1,4 +1,5 @@
 {% extends "main/master.html" %}
+{% block title %}Login{% endblock %}
 
 {% block content %}      
 
@@ -51,16 +52,5 @@
     </div>
   </div>
 </div>
-
-<!--Login--> 
-<!-- <div class="container">
-  <h1>Login</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ login_form|crispy }}
-    <button class="btn btn-primary" type="submit">Login</button>
-  </form>
-  <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
-</div> -->
 
 {% endblock %}
