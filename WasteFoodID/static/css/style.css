@@ -3,6 +3,10 @@
     --my-green : #27C499;
 }
 
+body {
+    font-family: "Poppins", sans-serif;
+}
+
 .btn-green {
     background-color: var(--my-green);
     color: white !important;

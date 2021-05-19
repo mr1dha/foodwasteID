@@ -3,5 +3,90 @@
 {% block dashboard %}menu-active{% endblock %}
 
 {% block content %}
+<style>
+    .content-wrapper {
+        padding : 2em;
+    }
 
+    .top-div {
+        margin-bottom: 1em;
+        background-color: var(--my-grey);
+        border-radius: 10px;
+        padding: .8em 2em;
+    }
+
+    .title-active {
+        font-size: 1.8em;
+        font-weight: 700;
+    }
+
+    .title-active svg {
+        vertical-align: sub;
+        color: var(--my-green);
+        margin-right: .25em;
+    }
+
+    .btn-add {
+        float: right;
+        margin-top: 3px;
+    }
+
+    .statistic {
+        background-color: #f2f2f2;
+        padding: 1em 2em 2em 2em;
+        border-radius: 10px;
+    }
+
+    .total {
+        display: block;
+        font-size: 3.5em;
+        line-height: 1em;
+        color: var(--my-green);
+        font-weight: 400;
+    }
+
+    .stat-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .diff {
+        font-weight: 600;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="top-div">
+        <span class="title-active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" class="bi bi-grid-1x2-fill" viewBox="0 0 16 16">
+                <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z"/>
+            </svg>
+            Dashboard</span>
+            <button class="btn btn-green btn-add">+ Add Waste</button>
+    </div>
+
+    <div class="statistic">
+        <p class="h5 font-weight-bold">This Month</p>
+        <div class="container">
+            <div class="stat-wrapper">
+                <div class="">
+                    <span class="text-muted">Wasted Foods</span>
+                    <span class="total mb-1">5.6kg</span>
+                    <small class="diff">1.3kg by last month</small>
+                </div>
+                <div class="">
+                    <span class="text-muted">Estimate Wasted Money</span>
+                    <span class="total mb-1">IDR250k</span>
+                    <small class="diff">IDR25k by last month</small>
+                </div>
+                <div class="">
+                    <span class="text-muted">Estimate Carbon Emition</span>
+                    <span class="total mb-1">0.12g</span>
+                    <small class="diff">0.03g by last month</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
