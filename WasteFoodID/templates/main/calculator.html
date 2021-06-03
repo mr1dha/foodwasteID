@@ -1,0 +1,163 @@
+{% extends 'main/dashboard.html' %}
+{% block title %}Waste Calculator{% endblock %}
+{% block calculator %}menu-active{% endblock %}
+
+{% block content %}
+<style>
+    .content-wrapper {
+        padding : 2em;
+    }
+    
+    .top-div {
+        margin-bottom: 1em;
+        background-color: var(--my-grey);
+        border-radius: 10px;
+        padding: .8em 2em;
+        margin-bottom: 2em;
+    }
+    
+    .title-active {
+        font-size: 1.8em;
+        font-weight: 700;
+    }
+    
+    .title-active svg {
+        vertical-align: sub;
+        color: var(--my-green);
+        margin-right: .25em;
+    }
+    
+    .btn-add {
+        float: right;
+        margin-top: 3px;
+    }
+    
+    .form-control {
+        background-color: #E5E5E5;
+        font-size: 1.5em;
+        height: 2.4em;
+    }
+    
+    .form-control:focus {
+        border-color: var(--my-green) !important;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgb(39, 196, 153, 0.6);
+    }
+
+    div.input-group {
+        margin-bottom: 2.25em !important;
+    }
+    
+    label {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    
+    .input-group-append span, .input-group-prepend span {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .btn-calc {
+        background-color: var(--my-green);
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        width: 100%;
+        padding: 1em;
+    }
+
+    .result-wrapper {
+        height: 100%;
+        border-radius: 10px;
+        background-color: #E5E5E5;
+        padding: 1em 2em;
+        margin-left: 2em;
+    }
+
+    span.summary {
+        font-size: 1.25em;
+        display: block;
+        margin-bottom: 1em;
+    }
+
+    label.result-text {
+        font-size: 1.35;
+        display: block;
+        /* margin-bottom: 0 !important; */
+    }
+
+    .result {
+        font-size: 2.75em;
+        color: var(--my-green);
+        display: block;
+        font-weight: bold;
+        line-height: 1em;
+        margin-bottom: .5em;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="top-div">
+        <span class="title-active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z"/>
+            </svg>
+            Waste Calculator</span>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+
+                <!-- Left Col => Input -->
+                <div class="col-md-5">
+                    <label for="weight">Daily average waste</label>
+                    <div class="input-group mb-3">
+                        <input id="weight" type="number" class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">KG</span>
+                        </div>
+                    </div>
+
+                    <label for="cost">Cost estimation per-Kg</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">IDR</span>
+                        </div>
+                        <input id="cost" type="number" class="form-control">
+                    </div>
+
+                    <label for="days">Days count</label>
+                    <div class="input-group mb-3">
+                        <input id="days" type="number" class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Days</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-lg btn-calc">Calculate</button>
+                </div>
+
+                <!-- Right Col => Result -->
+                <div class="col-md-7">
+                    <div class="result-wrapper">
+                        <label>Results:</label>
+                        <span class="summary">
+                            By wasting <b class="weight">2</b><b>kg foods</b>
+                            every day for <b class="day">365</b><b> days, you will:</b>
+                        </span>
+
+                        <label class="result-text">Money Loss:</label>
+                        <span class="result money">IDR 21,050,000</span>
+
+                        <label class="result-text">CO<sub>2</sub> Emissions:</label>
+                        <span class="result co2">3.24 kg</span>
+
+                        <label class="result-text">You can feed:</label>
+                        <span class="result feed">1,086 People  </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

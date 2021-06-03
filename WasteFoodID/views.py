@@ -15,6 +15,10 @@ def landing(request):
 def homepage(request):
     return render(request=request, template_name='main/home.html')
 
+@login_required(login_url="/login")
+def calculator(request):
+    return render(request=request, template_name='main/calculator.html')
+
 #Function ini berfungsi untuk mendaftarkan akun user baru
 def register_request(request):
 	if request.method == "POST":
