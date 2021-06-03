@@ -19,6 +19,11 @@ def homepage(request):
 def calculator(request):
     return render(request=request, template_name='main/calculator.html')
 
+@login_required(login_url="/login")
+def history(request):
+    return render(request=request, template_name='main/history.html')
+
+
 #Function ini berfungsi untuk mendaftarkan akun user baru
 def register_request(request):
 	if request.method == "POST":

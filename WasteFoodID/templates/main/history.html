@@ -1,0 +1,141 @@
+{% extends 'main/dashboard.html' %}
+{% block title %}Waste Calculator{% endblock %}
+{% block history %}menu-active{% endblock %}
+
+{% block content %}
+<style>
+    .content-wrapper {
+        padding : 2em;
+    }
+    
+    .top-div {
+        margin-bottom: 1em;
+        background-color: var(--my-grey);
+        border-radius: 10px;
+        padding: .8em 2em;
+        margin-bottom: 2em;
+    }
+    
+    .title-active {
+        font-size: 1.8em;
+        font-weight: 700;
+    }
+    
+    .title-active svg {
+        vertical-align: sub;
+        color: var(--my-green);
+        margin-right: .25em;
+    }
+
+    #month-input {
+        max-width: 15em !important;
+    }
+
+    .form-control {
+        background-color: #E5E5E5;
+        font-size: 1.5em;
+        height: 2em;
+    }
+    
+    .form-control:focus {
+        border-color: var(--my-green) !important;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgb(39, 196, 153, 0.6);
+    }
+
+    div.input-group {
+        margin-bottom: 2.25em !important;
+    }
+    
+    label {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .btn-history {
+        color: white;
+        background-color: var(--my-green);
+        font-weight: bold;
+    }
+    
+    #calendar {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .date {
+        cursor: pointer;
+        height:6em;
+        width: 15%;
+        border: 1px solid black;
+        position: relative;
+    }
+
+    .date-number {
+        font-size: 1.75em;
+        padding: .5em;
+    }
+
+    .weight-number {
+        font-weight: bold;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0.5rem;
+        font-size: 1.75em;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="top-div">
+        <span class="title-active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" class="bi bi-calendar-week-fill" viewBox="0 0 16 16">
+                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9.5 7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm3 0h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zM2 10.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+              </svg>
+            Waste History</span>
+        </div>
+
+        <div class="container">
+            <label for="month-input">Bulan dan Tahun</label>
+            <div class="input-group ">
+                <input id="month-input" type="month" class="form-control" value="june-2021"> 
+                <button class="btn ml-2 px-3 btn-history">Lihat</button>
+            </div>
+            
+            <div id="calendar">
+                <!-- <div class="date">
+                    <span class="date-number">${i}</span>
+                    <span class="weight-number">2.5kg</span>
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let monthInput = document.getElementById('month-input');
+        let calendar = document.getElementById('calendar');
+        let today = new Date()
+
+        m = today.getMonth() + 1;
+        m = m < 10 ? '0'+ m : m + '';
+        date = today.getFullYear() + '-' + m;
+        monthInput.value = date;
+
+        generateCalendar();
+
+
+        function generateCalendar() {
+            let temp = '';
+
+            for (let i = 1; i <= 30; i++ ) {
+                temp += `
+                <div class="date">
+                    <span class="date-number">${i}</span>
+                    <span class="weight-number">2.5kg</span>
+                </div>`;
+            }
+
+            calendar.innerHTML = temp;
+        }
+    </script>
+    {% endblock %}
