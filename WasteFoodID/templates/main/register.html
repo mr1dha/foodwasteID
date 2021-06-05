@@ -103,8 +103,18 @@
               />
             </div>
           </div>
-
           <button class="btn btn-green btn-register" type="submit">register</button>
+          {% if register_form.errors %}
+          <div class="alert alert-danger">
+            <ul>
+              {% for field in register_form %}
+                  {% for err in field.errors %}
+                  <li><small>{{ err }}</small></li>
+                  {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
         </form>
         <p class="text-center">
          Already have an account? <a href="/login">Log in here!</a>.

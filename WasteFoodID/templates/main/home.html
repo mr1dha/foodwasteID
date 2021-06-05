@@ -155,7 +155,7 @@
             
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-lg btn-green font-weight-bold">Add</button>
+          <button type="button" class="btn btn-lg btn-green font-weight-bold" onclick="uploadData(this)">Add</button>
         </div>
       </div>
     </div>
@@ -164,9 +164,9 @@
     <form id="form" action="{% url 'upload-waste' %}" method = 'POST' style="display: none;">
         {% csrf_token %}
         <input id="input-weight" type="hidden" name="weight">
-        <input id="input-day" type="hidden" name="weight">
-        <input id="input-month" type="hidden" name="weight">
-        <input id="input-year" type="hidden" name="weight">
+        <input id="input-day" type="hidden" name="day">
+        <input id="input-month" type="hidden" name="month">
+        <input id="input-year" type="hidden" name="year">
     </form>
 
 </div>
@@ -192,6 +192,14 @@
     inputWasteDate.value = `${today.getFullYear()}-${m}-${d}`;
 
 
+    function uploadData(btn) {
+        let weightInputModal = document.getElementById('weight'); 
+        let weightInputForm = document.getElementById('input-weight');
+
+        weightInputForm.value = weightInputModal.value;
+        
+        document.getElementById('form').submit();
+    }
 
 
 </script>

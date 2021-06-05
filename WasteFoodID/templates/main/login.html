@@ -38,6 +38,11 @@
   <div class="row justify-content-center align-items-center">
     <div class="col-md-5">
       <div class="login-wrapper">
+        {% if login_form.errors %}
+        <div class="alert alert-danger">
+          <small>Username or Password incorrect!</small>
+        </div>
+        {% endif %}
         <h2 class="font-weight-bold mb-4">Login</h2>
         <form method="POST">
           {% csrf_token %}

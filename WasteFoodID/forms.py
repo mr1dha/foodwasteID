@@ -24,6 +24,7 @@ class WasteFoodCreate(forms.ModelForm):
     class Meta:
         model = WasteFoodID
         fields = [
+			"user_id",
 			"day",
 			"month",
 			"year",
