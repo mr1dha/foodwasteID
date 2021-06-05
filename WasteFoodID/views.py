@@ -1,5 +1,8 @@
 from django.shortcuts import  render, redirect
-from .forms import NewUserForm
+from .forms import NewUserForm, WasteFoodCreate
+
+from .models import WasteFoodID
+
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import login
 from django.contrib import messages
@@ -22,6 +25,18 @@ def calculator(request):
 @login_required(login_url="/login")
 def history(request):
     return render(request=request, template_name='main/history.html')
+
+@login_required(login_url="/login")
+def upload_waste(request):
+	upload = WasteFoodID()
+	if request.method == 'POST':
+		request.user_id = request.user.id
+		upload = WasteFoodID(request.POST)
+		if upload.is_valid():
+			upload.save()
+			return redirect('homepage')
+		else:
+			return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'homepage'}}">reload</a>""")
 
 
 #Function ini berfungsi untuk mendaftarkan akun user baru

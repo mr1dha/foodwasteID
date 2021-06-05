@@ -29,6 +29,9 @@
     .btn-add {
         float: right;
         margin-top: 3px;
+        padding: .5em 1em;
+        border-radius: 10px;
+        font-weight: bold;
     }
 
     .statistic {
@@ -54,6 +57,46 @@
     .diff {
         font-weight: 600;
     }
+
+    .modal-header, .modal-footer {
+        border: none !important;
+    }
+
+    .modal-header h5{
+        font-size: 1.5em;
+    }
+
+    .modal-body {
+        padding: 1em 2.5em 0 2.5em;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 1em;
+        margin-bottom: 0;
+    }
+
+    .form-control:focus {
+        border-color: var(--my-green) !important;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgb(39, 196, 153, 0.6);
+    }
+
+    .form-control {
+        background-color: #E5E5E5;
+    }
+
+    .input-group-append span, .input-group-prepend span {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    #weight {
+        font-weight: bold;
+        text-align: center;
+        line-height: 1em;
+        font-size: 4em;
+        color: var(--my-green);
+    }
 </style>
 
 <div class="content-wrapper">
@@ -63,7 +106,7 @@
                 <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z"/>
             </svg>
             Dashboard</span>
-            <button class="btn btn-green btn-add">+ Add Waste</button>
+            <button class="btn btn-green btn-add" data-toggle="modal" data-target="#add-waste-modal">+ Add Waste</button>
     </div>
 
     <div class="statistic">
@@ -88,5 +131,68 @@
             </div>
         </div>
     </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="add-waste-modal" tabindex="-1" role="dialog" aria-labelledby="add-waste-modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold">+ Add Waste</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <label for="waste-date">Date</label>
+            <input class="form-control" id="waste-date" type="date">
+            <label class="mt-3" for="weight">Total waste</label>
+            <div class="input-group mb-3">
+                <input id="weight" type="number" class="form-control" value="0">
+                <div class="input-group-append">
+                    <span class="input-group-text">KG</span>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-green font-weight-bold">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <form id="form" action="{% url 'upload-waste' %}" method = 'POST' style="display: none;">
+        {% csrf_token %}
+        <input id="input-weight" type="hidden" name="weight">
+        <input id="input-day" type="hidden" name="weight">
+        <input id="input-month" type="hidden" name="weight">
+        <input id="input-year" type="hidden" name="weight">
+    </form>
+
 </div>
+
+<script>
+    let inputYear = document.getElementById('input-year'); 
+    let inputMonth = document.getElementById('input-month'); 
+    let inputDay = document.getElementById('input-day'); 
+    let inputWasteDate = document.getElementById('waste-date'); 
+
+    today = new Date();
+
+    let m = today.getMonth() + 1;
+    m = m < 10 ? '0'+ m : m + '';
+
+    let d = today.getDate();
+    d = d < 10 ? '0'+ d : d + '';
+
+    inputYear.value = today.getFullYear();
+    inputMonth.value = m;
+    inputDay.value = d;
+
+    inputWasteDate.value = `${today.getFullYear()}-${m}-${d}`;
+
+
+
+
+</script>
 {% endblock %}

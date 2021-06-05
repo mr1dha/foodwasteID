@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import WasteFoodID
 
 
 # Create your forms here.
@@ -18,3 +19,13 @@ class NewUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+class WasteFoodCreate(forms.ModelForm):
+    class Meta:
+        model = WasteFoodID
+        fields = [
+			"day",
+			"month",
+			"year",
+			"weight"
+		]
