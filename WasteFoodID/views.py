@@ -28,17 +28,33 @@ def calculator(request):
 @login_required(login_url="/login")
 def history(request):
 	if request.method == "POST":
-		return render(request=request, template_name='main/history.html')
+		my = request.POST['waste_date']
+		my = my.split("-")
+		y = int(my[0])
+		m = int(my[1])
+
+		waste = WasteFoodID.objects.filter(month=m, year=y, user_id=request.user.id)
+		res = []
+
+		for day in range(1, number_of_days_in_month(y,m)+1):
+			res.append(0)
+
+		for w in waste:
+			res[int(w.day)-1] += w.weight
+
+		if m < 10:
+			m = "0"+str(m)
+
+		return render(request=request, template_name='main/history.html', context={"datas":res, "mon": m, "year" : y})
 	else:
 		d = datetime.now().day
 		m = datetime.now().month
 		y = datetime.now().year
 		
-		waste = WasteFoodID.objects.filter(month=m, user_id=request.user.id)
+		waste = WasteFoodID.objects.filter(month=m, year=y, user_id=request.user.id)
 		res = []
-		mont_range = monthrange(y, m)
 
-		for day in range(mont_range[0], mont_range[1]+1):
+		for day in range(1, number_of_days_in_month(y,m)+1):
 			res.append(0)
 
 		for w in waste:
@@ -98,3 +114,7 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("landing")
+
+
+def number_of_days_in_month(year=2019, month=2):
+    return monthrange(year, month)[1]

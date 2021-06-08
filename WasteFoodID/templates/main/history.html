@@ -64,14 +64,14 @@
 
     .date {
         cursor: pointer;
-        height:6em;
-        width: 15%;
+        height:5em;
+        width: 13%;
         border: 1px solid black;
         position: relative;
     }
 
     .date-number {
-        font-size: 1.75em;
+        font-size: 1.5em;
         padding: .5em;
     }
 
@@ -81,7 +81,7 @@
         bottom: 0;
         right: 0;
         padding: 0.5rem;
-        font-size: 1.75em;
+        font-size: 1.5em;
     }
 </style>
 
@@ -96,10 +96,13 @@
 
         <div class="container">
             <label for="month-input">Bulan dan Tahun</label>
-            <div class="input-group ">
-                <input id="month-input" type="month" class="form-control" value="june-2021"> 
-                <button class="btn ml-2 px-3 btn-history">Lihat</button>
-            </div>
+            <form method="POST">
+                <div class="input-group ">
+                        {% csrf_token %}
+                        <input id="month-input" type="month" name="waste_date" class="form-control" value="{{ year }}-{{ mon }}"> 
+                        <button type="submit" class="btn ml-2 px-3 btn-history">Lihat</button>
+                </div>
+            </form>
             
             <div id="calendar">
             {% for waste in datas %}
@@ -121,15 +124,20 @@
         </div>
     </div>
 
+    <!-- Selanjutnya:
+        Buat sistem ganti bulan, dan generate kalender baru -->
+
     <script>
         let monthInput = document.getElementById('month-input');
         let calendar = document.getElementById('calendar');
         let today = new Date()
 
-        m = today.getMonth() + 1;
-        m = m < 10 ? '0'+ m : m + '';
-        date = today.getFullYear() + '-' + m;
-        monthInput.value = date;
+        if (monthInput.value == "") {
+            m = today.getMonth() + 1;
+            m = m < 10 ? '0'+ m : m + '';
+            date = today.getFullYear() + '-' + m;
+            monthInput.value = date;
+        }
 
         // generateCalendar();
 
