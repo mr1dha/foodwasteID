@@ -102,10 +102,20 @@
             </div>
             
             <div id="calendar">
-                <!-- <div class="date">
-                    <span class="date-number">${i}</span>
-                    <span class="weight-number">2.5kg</span>
-                </div> -->
+            {% for waste in datas %}
+                <div class="date" style="background-color :
+                    {% if waste <= 1 %}
+                    green;
+                    {% elif waste <= 2 %}
+                    yellow;
+                    {% else %}
+                    red;
+                    {% endif %}
+                ;">
+                    <span class="date-number">{{ forloop.counter }}</span>
+                    <span class="weight-number">{{ waste }}kg</span>
+                </div>
+            {% endfor %}
             </div>
 
         </div>
@@ -121,7 +131,7 @@
         date = today.getFullYear() + '-' + m;
         monthInput.value = date;
 
-        generateCalendar();
+        // generateCalendar();
 
 
         function generateCalendar() {

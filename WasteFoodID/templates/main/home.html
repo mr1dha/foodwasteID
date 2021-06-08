@@ -176,20 +176,32 @@
     let inputMonth = document.getElementById('input-month'); 
     let inputDay = document.getElementById('input-day'); 
     let inputWasteDate = document.getElementById('waste-date'); 
+    prepareData();
 
-    today = new Date();
+    inputWasteDate.addEventListener('change', function(e) {
+        let splitDate = this.value.split('-');
+        inputYear.value = parseInt(splitDate[0]);
+        inputMonth.value = parseInt(splitDate[1]);
+        inputDay.value = parseInt(splitDate[2]);
+    });
 
-    let m = today.getMonth() + 1;
-    m = m < 10 ? '0'+ m : m + '';
+    function prepareData() {
 
-    let d = today.getDate();
-    d = d < 10 ? '0'+ d : d + '';
+        today = new Date();
 
-    inputYear.value = today.getFullYear();
-    inputMonth.value = m;
-    inputDay.value = d;
+        let m = today.getMonth() + 1;
+        m = m < 10 ? '0'+ m : m + '';
 
-    inputWasteDate.value = `${today.getFullYear()}-${m}-${d}`;
+        let d = today.getDate();
+        d = d < 10 ? '0'+ d : d + '';
+
+        inputYear.value = today.getFullYear();
+        inputMonth.value = m;
+        inputDay.value = d;
+
+        inputWasteDate.value = `${today.getFullYear()}-${m}-${d}`;
+    }
+
 
 
     function uploadData(btn) {

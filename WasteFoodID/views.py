@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from pprint import pprint
+from datetime import datetime
+from calendar import monthrange
 
 #Function akan melakukam redirect ke landingpage saat base url diakses
 def landing(request):
@@ -25,7 +27,24 @@ def calculator(request):
 
 @login_required(login_url="/login")
 def history(request):
-    return render(request=request, template_name='main/history.html')
+	if request.method == "POST":
+		return render(request=request, template_name='main/history.html')
+	else:
+		d = datetime.now().day
+		m = datetime.now().month
+		y = datetime.now().year
+		
+		waste = WasteFoodID.objects.filter(month=m, user_id=request.user.id)
+		res = []
+		mont_range = monthrange(y, m)
+
+		for day in range(mont_range[0], mont_range[1]+1):
+			res.append(0)
+
+		for w in waste:
+			res[int(w.day)-1] += w.weight
+
+		return render(request=request, template_name='main/history.html', context={"datas":res})
 
 @login_required(login_url="/login")
 def upload_waste(request):
