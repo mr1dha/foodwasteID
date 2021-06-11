@@ -97,6 +97,11 @@
         font-size: 4em;
         color: var(--my-green);
     }
+
+    .chart-wrapper {
+        height: 25em;
+        margin-top : 2em;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -128,7 +133,11 @@
             </div>
         </div>
     </div>
-  
+
+    <div class="container chart-wrapper">
+        <canvas id="myChart"></canvas>
+    </div>
+
   <!-- Modal -->
   <div class="modal fade" id="add-waste-modal" tabindex="-1" role="dialog" aria-labelledby="add-waste-modalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -173,8 +182,15 @@
     let inputMonth = document.getElementById('input-month'); 
     let inputDay = document.getElementById('input-day'); 
     let inputWasteDate = document.getElementById('waste-date'); 
+    const datas = {{ datas }};
     prepareData();
     generateStatistic();
+
+    let labels = [];
+
+    for (let i = 1; i <= datas.length; i++) {
+        labels[i] = "Day "+i;
+    }
 
     inputWasteDate.addEventListener('change', function(e) {
         let splitDate = this.value.split('-');
@@ -219,7 +235,37 @@
         results[2].innerHTML = (weight * EMMISIONS_PER_KG).toFixed(2) +" kg";
     }
 
-    
+    </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        // ctx.height = 300;
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Weight (kg)',
+                    data: datas,
+                    backgroundColor: [
+                        'rgba(40, 204, 159, .3)',
+                    ],
+                    borderColor: [
+                        'rgb(40, 204, 159)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 </script>
 {% endblock %}

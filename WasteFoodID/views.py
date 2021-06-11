@@ -2,6 +2,7 @@ from django.shortcuts import  render, redirect
 from .forms import NewUserForm, WasteFoodCreate
 
 from .models import WasteFoodID
+import json
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import login
@@ -34,7 +35,7 @@ def homepage(request):
 	for w in waste:
 		res[int(w.day)-1] += w.weight
 
-	return render(request, 'main/home.html', {"weight":sum, "datas" : res})
+	return render(request, 'main/home.html', {"weight":sum, "datas" : json.dumps(res)})
 
 @login_required(login_url="/login")
 def calculator(request):
