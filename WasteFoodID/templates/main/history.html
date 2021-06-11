@@ -66,13 +66,21 @@
         cursor: pointer;
         height:5em;
         width: 13%;
-        border: 1px solid black;
+        border: 3px solid rgb(255, 255, 255);
+        margin: 5px;
         position: relative;
+        border-radius: 10px;
+    }
+
+    .date:hover {
+        transform: scale(1.15);
+        transition: .2s;
     }
 
     .date-number {
         font-size: 1.5em;
         padding: .5em;
+        color: white;
     }
 
     .weight-number {
@@ -106,13 +114,13 @@
             
             <div id="calendar">
             {% for waste in datas %}
-                <div class="date" style="background-color :
+                <div class="date shadow" style="background-color :
                     {% if waste <= 1 %}
-                    green;
+                    #42D5AA;
                     {% elif waste <= 2 %}
-                    yellow;
+                    #FBB600;
                     {% else %}
-                    red;
+                    #F76063;
                     {% endif %}
                 ;">
                     <span class="date-number">{{ forloop.counter }}</span>
@@ -124,8 +132,6 @@
         </div>
     </div>
 
-    <!-- Selanjutnya:
-        Buat sistem ganti bulan, dan generate kalender baru -->
 
     <script>
         let monthInput = document.getElementById('month-input');

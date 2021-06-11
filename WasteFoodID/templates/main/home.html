@@ -182,14 +182,14 @@
     let inputMonth = document.getElementById('input-month'); 
     let inputDay = document.getElementById('input-day'); 
     let inputWasteDate = document.getElementById('waste-date'); 
-    const datas = {{ datas }};
+    let datas = {{ datas }};
     prepareData();
     generateStatistic();
 
     let labels = [];
 
     for (let i = 1; i <= datas.length; i++) {
-        labels[i] = "Day "+i;
+        labels[i-1] = "Day "+i;
     }
 
     inputWasteDate.addEventListener('change', function(e) {
