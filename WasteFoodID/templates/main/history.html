@@ -91,6 +91,23 @@
         padding: 0.5rem;
         font-size: 1.5em;
     }
+
+    #weight {
+        font-weight: bold;
+        text-align: center;
+        line-height: 1em;
+        font-size: 4em;
+        color: var(--my-green);
+    }
+
+    .input-group-append span, .input-group-prepend span {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .form-control {
+        background-color: #E5E5E5;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -114,7 +131,8 @@
             
             <div id="calendar">
             {% for waste in datas %}
-                <div class="date shadow" style="background-color :
+                <div onclick="editWaste(this);" data-toggle="modal" data-target="#add-waste-modal"
+                data-day="{{ forloop.counter }}" data-waste="{{ waste }}" class="date shadow" style="background-color :
                     {% if waste <= 1 %}
                     #42D5AA;
                     {% elif waste <= 2 %}
@@ -132,11 +150,53 @@
         </div>
     </div>
 
+      <!-- Modal -->
+  <div class="modal fade" id="add-waste-modal" tabindex="-1" role="dialog" aria-labelledby="add-waste-modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold">+ Add Waste</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <label for="waste-date">Date</label>
+            <input class="form-control" id="waste-date" type="date" readonly>
+            <label class="mt-3" for="weight">Total waste</label>
+            <div class="input-group mb-3">
+                <input id="weight" type="number" class="form-control" value="0">
+                <div class="input-group-append">
+                    <span class="input-group-text">KG</span>
+                </div>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg btn-green font-weight-bold" onclick="uploadData(this)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <form id="form" action="{% url 'edit-waste' %}" method = 'POST' style="display: none;">
+        {% csrf_token %}
+        <input id="input-weight" type="hidden" name="weight">
+        <input id="input-day" type="hidden" name="day">
+        <input id="input-month" type="hidden" name="month">
+        <input id="input-year" type="hidden" name="year">
+    </form>
+
 
     <script>
         let monthInput = document.getElementById('month-input');
         let calendar = document.getElementById('calendar');
         let today = new Date()
+
+        let inputYear = document.getElementById('input-year'); 
+        let inputMonth = document.getElementById('input-month'); 
+        let inputDay = document.getElementById('input-day'); 
+        let inputWasteDate = document.getElementById('waste-date'); 
 
         if (monthInput.value == "") {
             m = today.getMonth() + 1;
@@ -145,21 +205,26 @@
             monthInput.value = date;
         }
 
-        // generateCalendar();
+        const inputWeight = document.getElementById('weight');
+        function editWaste(date) {
+            inputWeight.value = date.dataset.waste;
+            let d = parseInt(date.dataset.day);
+            d = d < 10 ? '0'+ d : d + '';
+            let m = monthInput.value.split('-')[1];
+            let y = monthInput.value.split('-')[0];
 
+            inputWasteDate.value = `${y}-${m}-${d}`;
 
-        function generateCalendar() {
-            let temp = '';
+            inputYear.value = parseInt(y);
+            inputMonth.value = parseInt(m);
+            inputDay.value = parseInt(d);
+        }
 
-            for (let i = 1; i <= 30; i++ ) {
-                temp += `
-                <div class="date">
-                    <span class="date-number">${i}</span>
-                    <span class="weight-number">2.5kg</span>
-                </div>`;
-            }
-
-            calendar.innerHTML = temp;
+        function uploadData(btn) {
+            let weightInputForm = document.getElementById('input-weight');
+            console.log(parseFloat(inputWeight.value));
+            weightInputForm.value = parseFloat(inputWeight.value);
+            document.getElementById('form').submit();
         }
     </script>
     {% endblock %}

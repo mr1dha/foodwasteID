@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from pprint import pprint
 from datetime import datetime
 from calendar import monthrange
+from django.http import HttpResponseRedirect
 
 #Function akan melakukam redirect ke landingpage saat base url diakses
 def landing(request):
@@ -83,10 +84,25 @@ def upload_waste(request):
 
 	if request.method == 'POST':
 		post_values = request.POST.copy()
-		post_values['user_id'] = request.user.id;
+		post_values['user_id'] = request.user.id
 		upload = WasteFoodCreate(post_values)
 		upload.save()
 		return redirect('homepage')
+
+@login_required(login_url="/login")
+def edit_waste(request):
+	if request.method == 'POST':
+		post_values = request.POST.copy()
+
+		# Hpaus data lama
+		delete_waste = WasteFoodID.objects.filter(day=post_values['day'], month=post_values['month'], year=post_values['year'], user_id=request.user.id)
+		delete_waste.delete()
+
+		# Save data baru
+		post_values['user_id'] = request.user.id
+		upload = WasteFoodCreate(post_values)
+		upload.save()
+		return HttpResponseRedirect('/history')
 
 #Function ini berfungsi untuk mendaftarkan akun user baru
 def register_request(request):

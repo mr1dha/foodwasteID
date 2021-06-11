@@ -14,4 +14,5 @@ urlpatterns = [
     path("login", views.login_request, name="login"),
     path("logout", views.logout_request, name= "logout"),
     path('upload_waste/', views.upload_waste, name = 'upload-waste'),
+    path('edit_waste/', views.edit_waste, name = 'edit-waste'),
 ]
