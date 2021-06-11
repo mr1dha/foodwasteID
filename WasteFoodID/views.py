@@ -19,7 +19,22 @@ def landing(request):
 #Function ini hanya akan melakukan redirect ke halaman beranda user
 @login_required(login_url="/login")
 def homepage(request):
-	return render(request, 'main/home.html')
+	m = datetime.now().month
+	y = datetime.now().year
+	waste = WasteFoodID.objects.filter(month=m, year=y, user_id=request.user.id)
+
+	sum = 0
+	for w in waste:
+		sum += w.weight
+
+	res = []
+	for day in range(1, number_of_days_in_month(y,m)+1):
+		res.append(0)
+
+	for w in waste:
+		res[int(w.day)-1] += w.weight
+
+	return render(request, 'main/home.html', {"weight":sum, "datas" : res})
 
 @login_required(login_url="/login")
 def calculator(request):

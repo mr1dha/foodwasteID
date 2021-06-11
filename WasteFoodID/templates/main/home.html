@@ -113,20 +113,17 @@
         <p class="h5 font-weight-bold">This Month</p>
         <div class="container">
             <div class="stat-wrapper">
-                <div class="">
-                    <span class="text-muted">Wasted Foods</span>
+                <div class="mt-2">
                     <span class="total mb-1">5.6kg</span>
-                    <small class="diff">1.3kg by last month</small>
+                    <span class="diff">Wasted Foods</span>
                 </div>
-                <div class="">
-                    <span class="text-muted">Estimate Wasted Money</span>
+                <div class="mt-2">
                     <span class="total mb-1">IDR250k</span>
-                    <small class="diff">IDR25k by last month</small>
+                    <span class="diff">Estimate Wasted Money</span>
                 </div>
-                <div class="">
-                    <span class="text-muted">Estimate Carbon Emition</span>
+                <div class="mt-2">
                     <span class="total mb-1">0.12g</span>
-                    <small class="diff">0.03g by last month</small>
+                    <span class="diff">Estimate CO<sub>2</sub>e Emition</span>
                 </div>
             </div>
         </div>
@@ -177,6 +174,7 @@
     let inputDay = document.getElementById('input-day'); 
     let inputWasteDate = document.getElementById('waste-date'); 
     prepareData();
+    generateStatistic();
 
     inputWasteDate.addEventListener('change', function(e) {
         let splitDate = this.value.split('-');
@@ -186,7 +184,6 @@
     });
 
     function prepareData() {
-
         today = new Date();
 
         let m = today.getMonth() + 1;
@@ -202,17 +199,27 @@
         inputWasteDate.value = `${today.getFullYear()}-${m}-${d}`;
     }
 
-
-
     function uploadData(btn) {
         let weightInputModal = document.getElementById('weight'); 
         let weightInputForm = document.getElementById('input-weight');
 
         weightInputForm.value = weightInputModal.value;
-        
         document.getElementById('form').submit();
     }
 
+    function generateStatistic() {
+        const EMMISIONS_PER_KG = 1.9;
+        const COST_PER_KG = 57000;
+        const weight = {{ weight }};
+
+        const results = document.querySelectorAll('.total');
+
+        results[0].innerHTML = (weight).toFixed(2)+" kg";
+        results[1].innerHTML = "IDR "+ (weight * COST_PER_KG).toLocaleString();
+        results[2].innerHTML = (weight * EMMISIONS_PER_KG).toFixed(2) +" kg";
+    }
+
+    
 
 </script>
 {% endblock %}

@@ -112,7 +112,7 @@
                 <div class="col-md-5">
                     <label for="weight">Daily average waste</label>
                     <div class="input-group mb-3">
-                        <input id="weight" type="number" class="form-control">
+                        <input id="weight" type="number" class="form-control" value="0">
                         <div class="input-group-append">
                             <span class="input-group-text">KG</span>
                         </div>
@@ -123,12 +123,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">IDR</span>
                         </div>
-                        <input id="cost" type="number" class="form-control">
+                        <input id="cost" type="number" class="form-control" value="0">
                     </div>
 
                     <label for="days">Days count</label>
                     <div class="input-group mb-3">
-                        <input id="days" type="number" class="form-control">
+                        <input id="days" type="number" class="form-control" value="0">
                         <div class="input-group-append">
                             <span class="input-group-text">Days</span>
                         </div>
@@ -142,22 +142,63 @@
                     <div class="result-wrapper">
                         <label>Results:</label>
                         <span class="summary">
-                            By wasting <b class="weight">2</b><b>kg foods</b>
-                            every day for <b class="day">365</b><b> days, you will:</b>
+                            By wasting <b class="summary-text">0</b><b> kg foods</b>
+                            every day for <b class="summary-text">0</b><b> days, you will:</b>
                         </span>
 
                         <label class="result-text">Money Loss:</label>
-                        <span class="result money">IDR 21,050,000</span>
+                        <span class="result money">IDR 0</span>
 
-                        <label class="result-text">CO<sub>2</sub> Emissions:</label>
-                        <span class="result co2">3.24 kg</span>
+                        <label class="result-text">CO<sub>2</sub>e Emissions:</label>
+                        <span class="result co2">0 kg</span>
 
                         <label class="result-text">You Can Feed:</label>
-                        <span class="result feed">1,086 People  </span>
+                        <span class="result feed">0 People  </span>
 
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    
+                </div>
+            </div>
         </div>
     </div>
+
+
+    <script>
+        // FOODWASTE data:
+        // Foods : 1 kg
+        // Co2e  : 1.9 kg
+        // Money : 57k
+        // People: 4 people
+
+       document.querySelector('.btn-calc').addEventListener('click', function(e) {
+            const EMMISIONS_PER_KG = 1.9;
+            const COST_PER_KG = 57000;
+            const PEOPLE_PER_KG = 4;
+
+            const weightInput = document.getElementById('weight');
+            const costInput = document.getElementById('cost');
+            const daysInput = document.getElementById('days');
+
+            const summary = document.querySelectorAll('.summary-text');
+            const results = document.querySelectorAll('.result');
+
+            // Implement
+            summary[0].innerHTML = weightInput.value;
+            summary[1].innerHTML = daysInput.value;
+
+            results[0].innerHTML = "IDR "+ (weightInput.value * COST_PER_KG * daysInput.value).toLocaleString();
+            results[1].innerHTML = (weightInput.value * EMMISIONS_PER_KG * daysInput.value).toFixed(2)+" kg";
+            results[2].innerHTML = weightInput.value * PEOPLE_PER_KG * daysInput.value+" People";
+       });
+
+
+        
+
+
+    </script>
     {% endblock %}
